@@ -17,37 +17,35 @@ public class Median {
         System.out.println("The median of two sorted arrays = " + median);
     }
 
-    private static double getMedianOfArrays(int[] arrayFirst, int[] arraySecond) {
-        int total_length = arrayFirst.length + arraySecond.length;
+    private static double getMedianOfArrays(int[] nums1, int[] nums2) {
+        int total_length = nums1.length + nums2.length;
         boolean odd = total_length % 2 == 0 ? true : false;
         int count_itteration = (odd) ? (total_length / 2 + 1) : ((total_length + 1) / 2);
-        int targetLeft = arrayFirst[0], targetRight = arraySecond[0];
-        int index1 = 0, index2 = 0;
-        for (int i = 0; i < count_itteration; i++) {
-            if (index1 < arrayFirst.length && index2 < arraySecond.length) {
-                if (arrayFirst[index1] < arraySecond[index2]) {
-                    targetRight = arrayFirst[index1];
+        int[] target = new int[count_itteration];
+        int index1 = 0, index2 = 0, i = 0;
+        while (i < count_itteration) {
+            if (index1 < nums1.length && index2 < nums2.length) {
+                if (nums1[index1] < nums2[index2]) {
+                    target[i] = nums1[index1];
                     index1++;
                 } else {
-                    targetRight = arraySecond[index2];
+                    target[i] = nums2[index2];
                     index2++;
 
                 }
+            } else {
+                if (index1 == nums1.length && index2 < nums2.length) {
+                    target[i] = nums2[index2++];
+                }
+                if (index2 == nums2.length && index1 < nums1.length) {
+                    target[i] = nums1[index1++];
+                }
             }
-            if (i == count_itteration - 2) targetLeft = targetRight;
-            if (index1 == arrayFirst.length && index2 < arraySecond.length){
-                targetRight = arraySecond[index2++];
-                i++;
-                if (i == count_itteration - 2) targetLeft = targetRight;
-            }
-            if (index2 == arraySecond.length && index1 < arrayFirst.length) {
-                targetRight = arrayFirst[index1++];
-                i++;
-                if (i == count_itteration - 2) targetLeft = targetRight;
-            }
+            i++;
         }
-        double target = (odd) ? (double)(targetLeft + targetRight)/2 : (double) targetRight;
-        return target;
+        return (odd)
+                ? (double) (target[count_itteration - 1] + target[count_itteration - 2]) / 2
+                : (double) target[count_itteration - 1];
     }
 
     private static int[] getInputArray(int item) {
