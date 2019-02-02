@@ -31,7 +31,6 @@ public class Median {
                 } else {
                     target[i] = nums2[index2];
                     index2++;
-
                 }
             } else {
                 if (index1 == nums1.length && index2 < nums2.length) {

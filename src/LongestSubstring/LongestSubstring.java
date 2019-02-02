@@ -19,8 +19,8 @@ public class LongestSubstring {
                 int index = subStr.indexOf(symbol);
                 if (index >= 0) {
                     i += index + 1;
-                    max = max > (size ) ? max : size ;
-                }else{
+                    max = max > (size) ? max : size;
+                } else {
                     max = max > (size + 1) ? max : size + 1;
                 }
             }
