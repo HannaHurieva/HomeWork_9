@@ -1,7 +1,13 @@
 package multiplying;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
+/*  Метод "Разделяй и властвуй"
+    Перемножение чисел в двоичной системе счисления.
+    Умножение "в столбик" - О(N^2)
+    https://stepik.org/lesson/13247/step/2?unit=3432 (постановка задачи 3:03 - 5:00)
+    */
 public class MultiplyInColumnBinary {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -9,7 +15,8 @@ public class MultiplyInColumnBinary {
         int x = input.nextInt();
         int y = input.nextInt();
         String result = multiplyInColumnBinary(x, y);
-        System.out.printf("Result of multiplycation = %d%n", Integer.parseInt(result,2));
+//        System.out.println("Result of multiplication = " + Integer.parseInt(result,2));
+        System.out.println("Result of multiplication = " + new BigInteger(result,2).longValue());
     }
 
     public static String multiplyInColumnBinary(int x, int y) {
@@ -51,7 +58,7 @@ public class MultiplyInColumnBinary {
             addend = first;
         } else {
             addend = "";
-            for (int j = 0; j < first.length(); j++) {
+            for (int i = 0; i < first.length(); i++) {
                 addend = addend.concat("0");
             }
         }
@@ -70,7 +77,7 @@ public class MultiplyInColumnBinary {
         String result = "";
 
         while (i >= 0) {
-            buffer = first_term[i] -48 + second_term[j] -48 + add;
+            buffer = first_term[i] - 48 + second_term[j] - 48 + add;
             switch (buffer) {
                 case 3:
                     result = result.concat("1");
@@ -89,18 +96,19 @@ public class MultiplyInColumnBinary {
                     add = 0;
                     break;
             }
+            if (j == 0) result = result.concat(Integer.toString(add));
             i--;
             j--;
         }
         while (j >= 0) {
-            if (second_term[j] -48 + add == 2) {
+            if (second_term[j] - 48 + add == 2) {
                 result = result.concat("0");
                 add = 1;
                 if (j == 0) result = result.concat("1");
             } else {
-                if (add == 1) {
+                if (second_term[j] - 48 + add == 1) {
                     result = result.concat("1");
-                } else result = result.concat(String.valueOf(second_term[j]));
+                } else result = result.concat("0");
             }
             j--;
         }
